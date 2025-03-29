@@ -1,18 +1,18 @@
 services:
-  myapp-1:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  # myapp-1:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
 
-  myapp-2:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  # myapp-2:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
 
-  myapp-3:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  # myapp-3:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
 
 
   balancer:
