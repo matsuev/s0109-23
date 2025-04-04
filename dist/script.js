@@ -1,5 +1,10 @@
 // Use WebSocket transport endpoint.
-const client = new Centrifuge('ws://10.82.143.170:8080/centrifugo/connection/websocket');
+const client = new Centrifuge('ws://127.0.0.1:8080/centrifugo/connection/websocket', {
+   data: {
+      username: "alex",
+      password: "qwerty"
+   }
+});
 
 // Trigger actual connection establishement.
 client.connect();

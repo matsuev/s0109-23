@@ -3,7 +3,13 @@
       "allow_anonymous_connect_without_token": true,
       "allowed_origins": [
          "*"
-      ]
+      ],
+      "proxy": {
+         "connect": {
+            "enabled": true,
+            "endpoint": "http://host.docker.internal:6080/connect"
+         }
+      }
    },
    "http_api": {
       "key": "my_api_key"
