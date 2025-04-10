@@ -1,9 +1,7 @@
 package main
 
 import (
-	"encoding/json"
 	"log"
-	"net/http"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -64,8 +62,13 @@ type ConnectResponse struct {
 func processConnect(ctx *fiber.Ctx) error {
 	var request ConnectRequest
 
-	if err := json.Unmarshal(ctx.Body(), &request); err != nil {
-		return ctx.SendStatus(http.StatusUnprocessableEntity)
+	if err := ctx.BodyParser(&request); err != nil {
+		return ctx.JSON(ConnectResponse{
+			Error: &ConnectResponseError{
+				Code:    101,
+				Message: "unauthorized",
+			},
+		})
 	}
 
 	if request.Data.Username == "alex" && request.Data.Password == "qwerty" {
@@ -76,5 +79,10 @@ func processConnect(ctx *fiber.Ctx) error {
 		})
 	}
 
-	return ctx.SendStatus(http.StatusUnauthorized)
+	return ctx.JSON(ConnectResponse{
+		Error: &ConnectResponseError{
+			Code:    101,
+			Message: "unauthorized",
+		},
+	})
 }

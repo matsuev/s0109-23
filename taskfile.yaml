@@ -1,0 +1,5 @@
+version: "3"
+
+tasks:
+  generate:
+    cmd: protoc -I ./ proxy.proto --go_out=./tmp --go-grpc_out=./tmp

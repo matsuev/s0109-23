@@ -1,0 +1,10 @@
+{
+   "client": "9336a229-2400-4ebc-8c50-0a643d22e8a0",
+   "transport": "websocket",
+   "protocol": "json",
+   "encoding": "json",
+   "data": {
+      "username": "alex",
+      "password": "gdshjfgjhsadgf"
+   }
+}
