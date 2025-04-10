@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package demo.service.proto;
+
+option go_package="./;demoapi";
+
+service DemoService {
+   rpc Echo(EchoData) returns (EchoData);
+   
+}
+
+message EchoData {
+   string message = 1;
+}
+
