@@ -31,4 +31,15 @@ func main() {
 	} else {
 		fmt.Println(response)
 	}
+
+	loginResponse, err := client.Login(context.Background(), &demoapi.LoginRequest{
+		Username: "alex",
+		Password: "qwertyghjgh",
+	})
+	if err != nil {
+		log.Println(err)
+	} else {
+		fmt.Println(loginResponse)
+	}
+
 }

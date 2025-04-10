@@ -19,7 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	DemoService_Echo_FullMethodName = "/demo.service.proto.DemoService/Echo"
+	DemoService_Echo_FullMethodName  = "/demo.service.proto.DemoService/Echo"
+	DemoService_Login_FullMethodName = "/demo.service.proto.DemoService/Login"
 )
 
 // DemoServiceClient is the client API for DemoService service.
@@ -27,6 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DemoServiceClient interface {
 	Echo(ctx context.Context, in *EchoData, opts ...grpc.CallOption) (*EchoData, error)
+	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
 }
 
 type demoServiceClient struct {
@@ -47,11 +49,22 @@ func (c *demoServiceClient) Echo(ctx context.Context, in *EchoData, opts ...grpc
 	return out, nil
 }
 
+func (c *demoServiceClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(LoginResponse)
+	err := c.cc.Invoke(ctx, DemoService_Login_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DemoServiceServer is the server API for DemoService service.
 // All implementations must embed UnimplementedDemoServiceServer
 // for forward compatibility.
 type DemoServiceServer interface {
 	Echo(context.Context, *EchoData) (*EchoData, error)
+	Login(context.Context, *LoginRequest) (*LoginResponse, error)
 	mustEmbedUnimplementedDemoServiceServer()
 }
 
@@ -64,6 +77,9 @@ type UnimplementedDemoServiceServer struct{}
 
 func (UnimplementedDemoServiceServer) Echo(context.Context, *EchoData) (*EchoData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Echo not implemented")
+}
+func (UnimplementedDemoServiceServer) Login(context.Context, *LoginRequest) (*LoginResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
 func (UnimplementedDemoServiceServer) mustEmbedUnimplementedDemoServiceServer() {}
 func (UnimplementedDemoServiceServer) testEmbeddedByValue()                     {}
@@ -104,6 +120,24 @@ func _DemoService_Echo_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DemoService_Login_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LoginRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DemoServiceServer).Login(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DemoService_Login_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DemoServiceServer).Login(ctx, req.(*LoginRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // DemoService_ServiceDesc is the grpc.ServiceDesc for DemoService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -114,6 +148,10 @@ var DemoService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Echo",
 			Handler:    _DemoService_Echo_Handler,
+		},
+		{
+			MethodName: "Login",
+			Handler:    _DemoService_Login_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
