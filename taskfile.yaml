@@ -1,5 +1,7 @@
 version: "3"
 
 tasks:
-  generate:
-    cmd: protoc -I ./ proxy.proto --go_out=./tmp --go-grpc_out=./tmp
+  genproto:
+    cmds:
+      - protoc -I ./contracts proxy.proto --go_out=./internal/proxyproto --go-grpc_out=./internal/proxyproto
+      - go mod tidy

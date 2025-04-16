@@ -1,13 +1,12 @@
 {
    "client": {
-      "allow_anonymous_connect_without_token": true,
       "allowed_origins": [
          "*"
       ],
       "proxy": {
          "connect": {
             "enabled": true,
-            "endpoint": "http://host.docker.internal:6080/connect"
+            "endpoint": "grpc://host.docker.internal:10000"
          }
       }
    },
