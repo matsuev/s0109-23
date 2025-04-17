@@ -5,3 +5,8 @@ tasks:
     cmds:
       - protoc -I ./contracts proxy.proto --go_out=./internal/proxyproto --go-grpc_out=./internal/proxyproto
       - go mod tidy
+
+  gensqlc:
+    cmds:
+      - sqlc generate
+      - go mod tidy
