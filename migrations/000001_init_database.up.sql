@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS "public"."chat"
     "id" bigint NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 9223372036854775807 CACHE 1 ),
     "channel" character varying(255) NOT NULL DEFAULT '',
     "title" character varying(255) NOT NULL DEFAULT '',
+    "default" boolean NOT NULL DEFAULT false,
     PRIMARY KEY ("id"),
     UNIQUE ("channel")
 );

@@ -1,5 +1,8 @@
 version: "3"
 
+dotenv:
+  - .env
+
 tasks:
   up:
     silent: true
@@ -13,3 +16,19 @@ tasks:
     cmds:
       - task: down
       - task: up
+
+  migration:
+    cmd: migrate -path ./migrations -database postgres://$DB_USER:$DB_PASS@127.0.01:5432/$DB_NAME?sslmode=disable {{.CLI_ARGS}}
+
+  tidy:
+    cmd: go mod tidy
+
+  gen:
+    cmds:
+      - sqlc generate
+      - task: tidy
+
+  proxyproto:
+    cmds:
+      - protoc -I ./contracts proxyproto.proto --go_out=./internal/proxyproto --go-grpc_out=./internal/proxyproto
+      - task: tidy
