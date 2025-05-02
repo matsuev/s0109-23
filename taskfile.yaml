@@ -1,0 +1,15 @@
+version: "3"
+
+tasks:
+  up:
+    silent: true
+    cmd: docker compose up -d --build
+
+  down:
+    silent: true
+    cmd: docker compose down
+
+  restart:
+    cmds:
+      - task: down
+      - task: up
